@@ -118,10 +118,12 @@ class BlueZGattCharacteristic(ServiceInterface):
         bytes
             The bytes that is the value of the characteristic
         """
+
+        client_id: str = options.get("device").value
         f = self._service.app.Read
         if f is None:
             raise NotImplementedError()
-        return f(self)
+        return f(self, client_id)
 
     @method()  # noqa: F722
     def WriteValue(self, value: "ay", options: "a{sv}"):  # type: ignore # noqa

@@ -31,7 +31,7 @@ class BaseBlessServer(abc.ABC):
     def __init__(self, loop: Optional[AbstractEventLoop] = None, **kwargs):
         self.loop: AbstractEventLoop = loop if loop else asyncio.get_event_loop()
 
-        self._callbacks: Dict[str, Callable[[Any], Any]] = {}
+        self._callbacks: Dict[str, Callable[[Any, str], Any]] = {}
 
         self.services: Dict[str, BlessGATTService] = {}
 
@@ -226,7 +226,7 @@ class BaseBlessServer(abc.ABC):
                         char_info.get("Value"), char_info.get("Permissions")
                         )
 
-    def read_request(self, uuid: str) -> bytearray:
+    def read_request(self, uuid: str, client_id) -> bytearray:
         """
         This function should be handed off to the subsequent backend bluetooth
         servers as a callback for incoming read requests on values for
@@ -255,7 +255,7 @@ class BaseBlessServer(abc.ABC):
         if not characteristic:
             raise BlessError("Invalid characteristic: {}".format(uuid))
 
-        return self.read_request_func(characteristic)
+        return self.read_request_func(characteristic, client_id)
 
     def write_request(self, uuid: str, value: Any):
         """
@@ -271,11 +271,11 @@ class BaseBlessServer(abc.ABC):
         self.write_request_func(characteristic, value)
 
     @property
-    def read_request_func(self) -> Callable[[Any], Any]:
+    def read_request_func(self) -> Callable[[Any, str], Any]:
         """
         Return an instance of the function to handle incoming read requests
         """
-        func: Optional[Callable[[Any], Any]] = self._callbacks.get("read")
+        func: Optional[Callable[[Any, str], Any]] = self._callbacks.get("read")
         if func is not None:
             return func
         else:

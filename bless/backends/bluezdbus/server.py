@@ -226,7 +226,7 @@ class BlessServerBlueZDBus(BaseBlessServer):
         characteristic.Value = bytes(cur_value)  # type: ignore
         return True
 
-    def read(self, char: BlueZGattCharacteristic) -> bytes:
+    def read(self, char: BlueZGattCharacteristic, client_id: str) -> bytes:
         """
         Read request.
         This re-routes the the request incomming on the dbus to the server to
@@ -244,7 +244,7 @@ class BlessServerBlueZDBus(BaseBlessServer):
         bytes
             The value of the characteristic
         """
-        return bytes(self.read_request(char.UUID))
+        return bytes(self.read_request(char.UUID, client_id))
 
     def write(self, char: BlueZGattCharacteristic, value: bytes):
         """

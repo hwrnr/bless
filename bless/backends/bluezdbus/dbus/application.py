@@ -49,7 +49,7 @@ class BlueZGattApplication(ServiceInterface):
         self.advertisements: List[BlueZLEAdvertisement] = []
         self.services: List[BlueZGattService] = []
 
-        self.Read: Optional[Callable[[BlueZGattCharacteristic], bytes]] = None
+        self.Read: Optional[Callable[[BlueZGattCharacteristic, str], bytes]] = None
         self.Write: Optional[Callable[[BlueZGattCharacteristic, bytes], None]] = None
         self.StartNotify: Optional[Callable[[None], None]] = None
         self.StopNotify: Optional[Callable[[None], None]] = None
