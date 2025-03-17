@@ -17,7 +17,7 @@ from winreg import (  # type: ignore
 class BLEAdapter:
     def __init__(self: "BLEAdapter"):
         self._adapter_name: str = get_bluetooth_adapter()
-        self._device_guid: str = "{a5dcbf10-6530-11d2-901f-00c04fb951ed}"
+        self._device_guid: str = "{92383b0e-f90e-4ac9-8d44-8c2d0d0ebda2}"
         self._device_name: str = self._adapter_name.replace("\\", "#")
         self._filename: str = "\\\\.\\" + self._device_name + "#" + self._device_guid
 
