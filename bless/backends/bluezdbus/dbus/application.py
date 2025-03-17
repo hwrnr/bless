@@ -50,7 +50,7 @@ class BlueZGattApplication(ServiceInterface):
         self.services: List[BlueZGattService] = []
 
         self.Read: Optional[Callable[[BlueZGattCharacteristic, str], bytes]] = None
-        self.Write: Optional[Callable[[BlueZGattCharacteristic, bytes], None]] = None
+        self.Write: Optional[Callable[[BlueZGattCharacteristic, bytes, str], None]] = None
         self.StartNotify: Optional[Callable[[None], None]] = None
         self.StopNotify: Optional[Callable[[None], None]] = None
 

@@ -246,7 +246,7 @@ class BlessServerBlueZDBus(BaseBlessServer):
         """
         return bytes(self.read_request(char.UUID, client_id))
 
-    def write(self, char: BlueZGattCharacteristic, value: bytes):
+    def write(self, char: BlueZGattCharacteristic, value: bytes, device_id: str):
         """
         Write request.
         This function re-routes the write request sent from the
@@ -260,4 +260,4 @@ class BlessServerBlueZDBus(BaseBlessServer):
         value : bytearray
             The value being requested to set
         """
-        return self.write_request(char.UUID, bytearray(value))
+        return self.write_request(char.UUID, bytearray(value), device_id)

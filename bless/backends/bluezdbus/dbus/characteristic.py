@@ -138,10 +138,11 @@ class BlueZGattCharacteristic(ServiceInterface):
         options : Dict
             Some options for you to select from
         """
+        client_id: str = options.get("device").value
         f = self._service.app.Write
         if f is None:
             raise NotImplementedError()
-        f(self, value)
+        f(self, value, client_id)
 
     @method()
     def StartNotify(self):  # noqa: N802

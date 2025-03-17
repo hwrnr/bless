@@ -257,7 +257,7 @@ class BaseBlessServer(abc.ABC):
 
         return self.read_request_func(characteristic, client_id)
 
-    def write_request(self, uuid: str, value: Any):
+    def write_request(self, uuid: str, value: Any, device_id: str):
         """
         Obtain the characteristic to write and pass on to the user-defined
         write_request_func
@@ -268,7 +268,7 @@ class BaseBlessServer(abc.ABC):
             uuid
         )
 
-        self.write_request_func(characteristic, value)
+        self.write_request_func(characteristic, value, device_id)
 
     @property
     def read_request_func(self) -> Callable[[Any, str], Any]:
@@ -293,7 +293,7 @@ class BaseBlessServer(abc.ABC):
         """
         Return an instance of the function to handle incoming write requests
         """
-        func: Optional[Callable[[Any], Any]] = self._callbacks.get("write")
+        func: Optional[Callable[[Any], Any, str]] = self._callbacks.get("write")
         if func is not None:
             return func
         else:
