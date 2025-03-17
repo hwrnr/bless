@@ -320,6 +320,9 @@ class BlessServerWinRT(BaseBlessServer):
         logger.debug("Getting request object {}".format(self))
         request: GattReadRequest
 
+        # TODO: Remove log
+        logger.debug(f"Read characteristic. Client ID: {args.session.device_id.id}")
+
         async def f():
             nonlocal args
             nonlocal request
@@ -352,6 +355,9 @@ class BlessServerWinRT(BaseBlessServer):
             nonlocal args
             nonlocal request
             request = await args.get_request_async()
+
+        # TODO: Remove log
+        logger.debug(f"Write characteristic. Client ID: {args.session.device_id.id}")
 
         asyncio.new_event_loop().run_until_complete(f())
         logger.debug("Request value: {}".format(request.value))
