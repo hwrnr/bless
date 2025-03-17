@@ -8,6 +8,9 @@ import threading
 
 from typing import Any, Union
 
+sys.path.append(".")
+sys.path.append("..")
+
 from bless import (  # type: ignore
     BlessServer,
     BlessGATTCharacteristic,
@@ -26,12 +29,12 @@ else:
     trigger = asyncio.Event()
 
 
-def read_request(characteristic: BlessGATTCharacteristic, **kwargs) -> bytearray:
+def read_request(characteristic: BlessGATTCharacteristic, client_id: str, **kwargs) -> bytearray:
     logger.debug(f"Reading {characteristic.value}")
     return characteristic.value
 
 
-def write_request(characteristic: BlessGATTCharacteristic, value: Any, **kwargs):
+def write_request(characteristic: BlessGATTCharacteristic, value: Any, client_id: str, **kwargs):
     characteristic.value = value
     logger.debug(f"Char value set to {characteristic.value}")
     if characteristic.value == b"\x0f":

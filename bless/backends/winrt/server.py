@@ -312,7 +312,7 @@ class BlessServerWinRT(BaseBlessServer):
         """
         logger.debug("Reading Characteristic")
         deferral: Deferral = args.get_deferral()
-        value: bytearray = self.read_request(str(sender.uuid))
+        value: bytearray = self.read_request(str(sender.uuid), args.session.device_id.id)
         logger.debug(f"Current Characteristic value {value}")
         value = value if value is not None else b"\x00"
         writer: DataWriter = DataWriter()
@@ -363,7 +363,7 @@ class BlessServerWinRT(BaseBlessServer):
             value.append(next_byte)
 
         logger.debug("Written Value: {}".format(value))
-        self.write_request(str(sender.uuid), value)
+        self.write_request(str(sender.uuid), value, args.session.device_id.id)
 
         if request.option == GattWriteOption.WRITE_WITH_RESPONSE:
             request.respond()

@@ -226,7 +226,7 @@ class BaseBlessServer(abc.ABC):
                         char_info.get("Value"), char_info.get("Permissions")
                         )
 
-    def read_request(self, uuid: str, client_id) -> bytearray:
+    def read_request(self, uuid: str, client_id: str) -> bytearray:
         """
         This function should be handed off to the subsequent backend bluetooth
         servers as a callback for incoming read requests on values for
@@ -257,7 +257,7 @@ class BaseBlessServer(abc.ABC):
 
         return self.read_request_func(characteristic, client_id)
 
-    def write_request(self, uuid: str, value: Any, device_id: str):
+    def write_request(self, uuid: str, value: Any, client_id: str):
         """
         Obtain the characteristic to write and pass on to the user-defined
         write_request_func
@@ -268,7 +268,7 @@ class BaseBlessServer(abc.ABC):
             uuid
         )
 
-        self.write_request_func(characteristic, value, device_id)
+        self.write_request_func(characteristic, value, client_id)
 
     @property
     def read_request_func(self) -> Callable[[Any, str], Any]:
