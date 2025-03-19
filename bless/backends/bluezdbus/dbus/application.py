@@ -74,7 +74,8 @@ class BlueZGattApplication(ServiceInterface):
             Returns and instance of the service object
         """
         index: int = len(self.services) + 1
-        primary: bool = index == 1
+        #  primary: bool = index == 1
+        primary: bool = True
         service: BlueZGattService = BlueZGattService(uuid, primary, index, self)
         self.services.append(service)
         self.bus.export(service.path, service)
